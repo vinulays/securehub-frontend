@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import FormField from "@/components/common/form-field";
 import { Button } from "@/components/ui/button";
 import { Field, FieldError } from "@/components/ui/field";
+import { ROUTES } from "@/constants/routes";
 import { getErrorMessage } from "@/lib/error-handler";
 import { cn } from "@/lib/utils";
 
@@ -37,7 +38,7 @@ export function LoginForm() {
         password: data.password,
       });
 
-      router.push("/dashboard");
+      router.push(ROUTES.DASHBOARD);
     } catch (error) {
       setError("root", {
         type: "server",
@@ -99,7 +100,7 @@ export function LoginForm() {
       </Field>
 
       <div className="text-sm text-center text-muted-foreground">
-        <Link href="/forgot-password" className="hover:underline">
+        <Link href={ROUTES.AUTH.FORGOT_PASSWORD} className="hover:underline">
           Forgot your password?
         </Link>
       </div>
