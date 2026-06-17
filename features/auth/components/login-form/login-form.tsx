@@ -16,11 +16,15 @@ import { cn } from "@/lib/utils";
 import { useLogin } from "../../hooks/use-login";
 import type { LoginFormValues } from "../../schemas/auth.schema";
 import { loginSchema } from "../../schemas/auth.schema";
+import { authService } from "../../services/auth-service";
+import { useAuthStore } from "../../store/auth-store";
 
 export function LoginForm() {
   const router = useRouter();
 
   const { login, isLoading } = useLogin();
+
+  const { setUser } = useAuthStore.getState();
 
   const { control, handleSubmit, formState, setError } =
     useForm<LoginFormValues>({
@@ -37,6 +41,10 @@ export function LoginForm() {
         username: data.username,
         password: data.password,
       });
+
+      const currentUser = await authService.getCurrentUser();
+
+      setUser(currentUser);
 
       router.push(ROUTES.DASHBOARD);
     } catch (error) {

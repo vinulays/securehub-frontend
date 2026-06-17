@@ -4,16 +4,19 @@ import { NextResponse } from "next/server";
 import { ROUTES } from "./constants/routes";
 
 export function proxy(request: NextRequest) {
-  const token = request.cookies.get("access_token");
+  const accessToken = request.cookies.get("access_token");
+  const refreshToken = request.cookies.get("refresh_token");
+
+  const hasSession = accessToken || refreshToken;
 
   const isLoginPage = request.nextUrl.pathname === ROUTES.AUTH.LOGIN;
   const isRootPage = request.nextUrl.pathname === ROUTES.ROOT;
 
-  if (!token && !isLoginPage) {
+  if (!hasSession && !isLoginPage) {
     return NextResponse.redirect(new URL(ROUTES.AUTH.LOGIN, request.url));
   }
 
-  if (token && (isLoginPage || isRootPage)) {
+  if (hasSession && (isLoginPage || isRootPage)) {
     return NextResponse.redirect(new URL(ROUTES.DASHBOARD, request.url));
   }
 
