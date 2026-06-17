@@ -24,7 +24,7 @@ import {
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
-import type { AuthUser } from "@/features/auth/types/auth.types";
+import type { AuthUser } from "@/features/auth";
 
 interface NavUserProps {
   user: AuthUser;
