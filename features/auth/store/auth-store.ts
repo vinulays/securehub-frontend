@@ -1,11 +1,12 @@
 import { create } from "zustand";
 
-import type { User } from "../types/auth.types";
+import type { AuthUser } from "../types/auth.types";
 
 interface AuthState {
-  user: User | null;
+  user: AuthUser | null;
 
-  setUser: (user: User | null) => void;
+  setUser: (user: AuthUser | null) => void;
+  clearUser: () => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -15,4 +16,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     set({
       user,
     }),
+
+  clearUser: () => set({ user: null }),
 }));

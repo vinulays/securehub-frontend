@@ -14,6 +14,8 @@ import {
 } from "lucide-react";
 import React from "react";
 
+import { useAuthUser } from "@/features/auth/hooks/use-auth-user";
+
 import {
   Sidebar,
   SidebarContent,
@@ -158,18 +160,10 @@ const data = {
 export default function AppSidebar({
   ...props
 }: React.ComponentProps<typeof Sidebar>) {
+  const user = useAuthUser();
+
   return (
     <Sidebar collapsible="icon" {...props}>
-      {/* <SidebarHeader>
-        <div className="flex p-2 justify-center gap-2 md:justify-start">
-          <a href="#" className="flex items-center gap-2 font-medium">
-            <div className="flex size-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <GalleryVerticalEnd className="size-4" />
-            </div>
-            SecureHub
-          </a>
-        </div>
-      </SidebarHeader> */}
       <SidebarHeader>
         <OrganizationSwitcher teams={data.teams} />
       </SidebarHeader>
@@ -179,9 +173,7 @@ export default function AppSidebar({
         <NavProjects projects={data.projects} />
       </SidebarContent>
 
-      <SidebarFooter>
-        <NavUser user={data.user} />
-      </SidebarFooter>
+      <SidebarFooter>{user && <NavUser user={user} />}</SidebarFooter>
 
       <SidebarRail />
     </Sidebar>
