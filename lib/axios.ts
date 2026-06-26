@@ -1,6 +1,7 @@
 import type { InternalAxiosRequestConfig } from "axios";
 import axios from "axios";
 
+import { API_ROUTES } from "@/constants/api";
 import { ROUTES } from "@/constants/routes";
 
 interface RetryConfig extends InternalAxiosRequestConfig {
@@ -39,8 +40,14 @@ api.interceptors.response.use(
 
   async (error) => {
     const originalRequest: RetryConfig = error.config;
+    const requestUrl = originalRequest?.url;
+    const isLoginOrRefreshRequest = requestUrl === API_ROUTES.AUTH.LOGIN;
 
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    if (
+      error.response?.status !== 401 ||
+      originalRequest._retry ||
+      isLoginOrRefreshRequest
+    ) {
       return Promise.reject(error);
     }
 

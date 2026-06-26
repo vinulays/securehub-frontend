@@ -26,7 +26,7 @@ export function LoginForm() {
 
   const { setUser } = useAuthStore.getState();
 
-  const { control, handleSubmit, formState, setError } =
+  const { control, handleSubmit, formState, setError, clearErrors } =
     useForm<LoginFormValues>({
       resolver: zodResolver(loginSchema),
       defaultValues: {
@@ -36,6 +36,8 @@ export function LoginForm() {
     });
 
   const onSubmit = async (data: LoginFormValues) => {
+    clearErrors("root");
+
     try {
       await login({
         username: data.username,
