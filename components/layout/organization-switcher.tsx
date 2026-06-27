@@ -1,6 +1,6 @@
 "use client";
 
-import { AudioWaveform, ChevronsUpDown } from "lucide-react";
+import { ChevronsUpDown } from "lucide-react";
 import { useEffect, useState } from "react";
 
 import {
@@ -14,7 +14,9 @@ import {
   useMyOrganizations,
   useOrganizationSwitcher,
 } from "@/features/organization";
+import { getAvatarColor, getInitials } from "@/lib/utils";
 
+import { Avatar, AvatarFallback } from "../ui/avatar";
 import {
   Command,
   CommandEmpty,
@@ -37,6 +39,7 @@ export function OrganizationSwitcher() {
     organization: MyOrganizationResponse,
   ) => {
     await switchOrganization(organization);
+
     setIsPopoverOpen(false);
   };
 
@@ -60,9 +63,16 @@ export function OrganizationSwitcher() {
                 size="lg"
                 className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
-                  <AudioWaveform className="size-4" />
-                </div>
+                <Avatar className="size-8">
+                  <AvatarFallback
+                    style={getAvatarColor(activeOrganization?.name || "")}
+                    className="text-sidebar-primary-foreground text-xs font-semibold"
+                  >
+                    {activeOrganization?.name
+                      ? getInitials(activeOrganization.name)
+                      : "OR"}
+                  </AvatarFallback>
+                </Avatar>
 
                 <div className="grid flex-1 text-left text-sm leading-tight">
                   <span className="truncate font-medium">
@@ -100,9 +110,14 @@ export function OrganizationSwitcher() {
                     >
                       <div className="flex justify-between items-center w-full">
                         <div className="flex items-center gap-2">
-                          <div className="flex size-6 items-center justify-center rounded-md border">
-                            <AudioWaveform className="size-3.5 shrink-0" />
-                          </div>
+                          <Avatar className="size-8">
+                            <AvatarFallback
+                              style={getAvatarColor(organization.name)}
+                              className="text-xs font-semibold text-sidebar-primary-foreground"
+                            >
+                              {getInitials(organization.name)}
+                            </AvatarFallback>
+                          </Avatar>
 
                           {organization.name}
                         </div>
