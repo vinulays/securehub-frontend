@@ -1,10 +1,29 @@
-#!/usr/bin/env sh
+#!/bin/sh
 
-echo "Running type check..."
-pnpm type-check
+echo 'Checking for project linting, formatting, typescript, and build issues 🏗️👷'
 
-# echo "Running tests..."
-# pnpm test
+pnpm run check:lint ||
+(
+    echo 'Linting issues found ❌' Please run `npm run lint` to fix this automatically.
+    false;
+)
 
-echo "Running production build..."
-pnpm build
+pnpm run check:format ||
+(
+    echo 'Formatting issues found ❌ Please run `npm run format` to fix this automatically.';
+    false;
+)
+
+pnpm run check:types ||
+(
+    echo 'TypeScript issues found ❌'
+    false;
+)
+
+pnpm run build ||
+(
+    echo 'Build issues found ❌'
+    false;
+)
+
+echo 'No issues found ✅'

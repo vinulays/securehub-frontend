@@ -1,18 +1,15 @@
-import type { InternalAxiosRequestConfig } from "axios";
-import axios from "axios";
+import type { InternalAxiosRequestConfig } from 'axios';
+import axios from 'axios';
 
-import { ROUTES } from "@/constants/routes";
+import { API_BASE_URL, API_ROUTES } from '@/constants/api';
+import { ROUTES } from '@/constants/routes';
 
 interface RetryConfig extends InternalAxiosRequestConfig {
   _retry?: boolean;
 }
 
-if (!process.env.NEXT_PUBLIC_API_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL is not defined");
-}
-
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
@@ -39,8 +36,10 @@ api.interceptors.response.use(
 
   async (error) => {
     const originalRequest: RetryConfig = error.config;
+    const requestUrl = originalRequest?.url;
+    const isLoginOrRefreshRequest = requestUrl === API_ROUTES.AUTH.LOGIN;
 
-    if (error.response?.status !== 401 || originalRequest._retry) {
+    if (error.response?.status !== 401 || originalRequest._retry || isLoginOrRefreshRequest) {
       return Promise.reject(error);
     }
 
@@ -57,7 +56,7 @@ api.interceptors.response.use(
     isRefreshing = true;
 
     try {
-      await api.post("/auth/refresh");
+      await api.post('/auth/refresh');
 
       processQueue(null);
 
@@ -65,7 +64,7 @@ api.interceptors.response.use(
     } catch (refreshError) {
       processQueue(refreshError);
 
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         window.location.href = ROUTES.AUTH.LOGIN;
       }
 

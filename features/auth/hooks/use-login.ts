@@ -1,7 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
-import { authService } from "../services/auth-service";
-import type { LoginRequest, LoginResponse } from "../types/auth.types";
+import { authService } from '../services/auth-service';
+import type { LoginRequest, LoginResponse } from '../types/auth.types';
 
 interface UseLoginResult {
   login: (data: LoginRequest) => Promise<LoginResponse>;

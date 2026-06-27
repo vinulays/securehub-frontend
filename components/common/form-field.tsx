@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React from "react";
-import type { Control, FieldPath, FieldValues } from "react-hook-form";
-import { Controller } from "react-hook-form";
+import React from 'react';
+import type { Control, FieldPath, FieldValues } from 'react-hook-form';
+import { Controller } from 'react-hook-form';
 
-import { Field, FieldContent, FieldError, FieldLabel } from "../ui/field";
-import { Input } from "../ui/input";
+import { Field, FieldContent, FieldError, FieldLabel } from '../ui/field';
+import { Input } from '../ui/input';
 
 export interface FormFieldProps<TFormValues extends FieldValues = FieldValues> {
   name: FieldPath<TFormValues>;
@@ -18,7 +18,7 @@ export interface FormFieldProps<TFormValues extends FieldValues = FieldValues> {
   showPasswordToggle?: boolean;
   required?: boolean;
   autoComplete?: React.HTMLInputAutoCompleteAttribute | undefined;
-  ariaAutoComplete?: "none" | "inline" | "list" | "both" | undefined;
+  ariaAutoComplete?: 'none' | 'inline' | 'list' | 'both' | undefined;
   showError?: boolean;
   showRequiredErrorOnly?: boolean;
   disabled?: boolean;
@@ -29,7 +29,7 @@ export function FormField<TFormValues extends FieldValues = FieldValues>({
   control,
   label,
   id,
-  type = "text",
+  type = 'text',
   placeholder,
   inputClassName,
   showPasswordToggle,
@@ -48,12 +48,9 @@ export function FormField<TFormValues extends FieldValues = FieldValues>({
       control={control}
       render={({ field, fieldState }) => {
         const shouldShowError = showError && fieldState.invalid;
-        const isRequiredError = fieldState.error?.message
-          ?.toLowerCase()
-          .includes("required");
+        const isRequiredError = fieldState.error?.message?.toLowerCase().includes('required');
 
-        const displayError =
-          shouldShowError && (!showRequiredErrorOnly || isRequiredError);
+        const displayError = shouldShowError && (!showRequiredErrorOnly || isRequiredError);
 
         return (
           <Field>

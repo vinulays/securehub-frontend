@@ -1,60 +1,62 @@
-"use client";
+'use client';
 
-import { ChevronsUpDown, Plus } from "lucide-react";
-import * as React from "react";
+import { ChevronsUpDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import type { MyOrganizationResponse } from '@/features/organization';
+import { useMyOrganizations, useOrganizationSwitcher } from '@/features/organization';
+import { getAvatarColor, getInitials } from '@/lib/utils';
 
-export function OrganizationSwitcher({
-  teams,
-}: {
-  teams: {
-    name: string;
-    logo: React.ElementType;
-    plan: string;
-  }[];
-}) {
+import { Avatar, AvatarFallback } from '../ui/avatar';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import OrganizationSwitcherSkeleton from './organization-switcher-skeleton';
+
+export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
-  const [activeTeam, setActiveTeam] = React.useState(teams[0]);
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
-  if (!activeTeam) {
-    return null;
+  const { data: organizations = [], isLoading } = useMyOrganizations();
+  const { activeOrganization, switchOrganization } = useOrganizationSwitcher();
+
+  const handleOrganizationSelect = async (organization: MyOrganizationResponse) => {
+    await switchOrganization(organization);
+
+    setIsPopoverOpen(false);
+  };
+
+  useEffect(() => {
+    if (!activeOrganization && organizations.length > 0) {
+      switchOrganization(organizations[0]);
+    }
+  }, [organizations, activeOrganization, switchOrganization]);
+
+  if (isLoading) {
+    return <OrganizationSwitcherSkeleton />;
   }
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+          <PopoverTrigger
             render={
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
+                className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
-                <div className="flex aspect-square size-8 items-center justify-center rounded-lg bg-primary text-sidebar-primary-foreground">
-                  <activeTeam.logo className="size-4" />
-                </div>
+                <Avatar className="size-8">
+                  <AvatarFallback
+                    style={getAvatarColor(activeOrganization?.name || '')}
+                    className="text-xs font-semibold text-sidebar-primary-foreground"
+                  >
+                    {activeOrganization?.name ? getInitials(activeOrganization.name) : 'OR'}
+                  </AvatarFallback>
+                </Avatar>
 
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">
-                    {activeTeam.name}
-                  </span>
-                  <span className="truncate text-xs">{activeTeam.plan}</span>
+                  <span className="truncate font-medium">{activeOrganization?.name}</span>
                 </div>
 
                 <ChevronsUpDown className="ml-auto" />
@@ -62,44 +64,42 @@ export function OrganizationSwitcher({
             }
           />
 
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
-            align="start"
-            side={isMobile ? "bottom" : "right"}
-            sideOffset={4}
-          >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
-                Teams
-              </DropdownMenuLabel>
-            </DropdownMenuGroup>
+          <PopoverContent className="rounded-lg" align="start" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
+            <Command>
+              <CommandInput placeholder="Search organizations..." />
 
-            {teams.map((team, index) => (
-              <DropdownMenuItem
-                key={team.name}
-                onClick={() => setActiveTeam(team)}
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-md border">
-                  <team.logo className="size-3.5 shrink-0" />
-                </div>
+              <CommandList>
+                <CommandEmpty>No organization found.</CommandEmpty>
 
-                {team.name}
+                <CommandGroup>
+                  {organizations.map((organization: MyOrganizationResponse) => (
+                    <CommandItem
+                      key={organization.id}
+                      value={organization.name}
+                      onSelect={() => handleOrganizationSelect(organization)}
+                      data-checked={activeOrganization && activeOrganization.id === organization.id}
+                    >
+                      <div className="flex w-full items-center justify-between">
+                        <div className="flex items-center gap-2">
+                          <Avatar className="size-8">
+                            <AvatarFallback
+                              style={getAvatarColor(organization.name)}
+                              className="text-xs font-semibold text-sidebar-primary-foreground"
+                            >
+                              {getInitials(organization.name)}
+                            </AvatarFallback>
+                          </Avatar>
 
-                <DropdownMenuShortcut>⌘{index + 1}</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            ))}
-
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-              <div className="font-medium text-muted-foreground">Add team</div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                          {organization.name}
+                        </div>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </SidebarMenuItem>
     </SidebarMenu>
   );

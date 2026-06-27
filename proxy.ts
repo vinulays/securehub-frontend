@@ -1,11 +1,11 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
-import { ROUTES } from "./constants/routes";
+import { ROUTES } from './constants/routes';
 
 export function proxy(request: NextRequest) {
-  const accessToken = request.cookies.get("access_token");
-  const refreshToken = request.cookies.get("refresh_token");
+  const accessToken = request.cookies.get('access_token');
+  const refreshToken = request.cookies.get('refresh_token');
 
   const hasSession = accessToken || refreshToken;
 
@@ -24,7 +24,5 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: [
-    "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)",
-  ],
+  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'],
 };
