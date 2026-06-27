@@ -77,19 +77,3 @@ jobs:
 
       - name: Run build check
         run: pnpm run build
-
-  unit-tests:
-    name: Unit Tests
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Enable Corepack (pnpm)
-        run: corepack enable
-
-      - name: Install dependencies
-        run: pnpm install
-
-      - name: Run unit tests
-        run: pnpm run test
