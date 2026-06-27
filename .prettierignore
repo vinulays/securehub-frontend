@@ -1,0 +1,23 @@
+# Dependencies
+node_modules
+
+# Build outputs
+dist
+build
+.next
+
+# Environment & cache files
+.env
+.env.local
+
+# Lock files
+pnpm-lock.yaml
+
+# Coverage & reports
+coverage
+
+# Public files
+public
+
+# Workflow files
+.github/workflows

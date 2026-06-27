@@ -1,8 +1,8 @@
-import { useQueryClient } from "@tanstack/react-query";
-import { useCallback } from "react";
+import { useQueryClient } from '@tanstack/react-query';
+import { useCallback } from 'react';
 
-import { useOrganizationStore } from "../store/organization-store";
-import type { MyOrganizationResponse } from "../types/organization.types";
+import { useOrganizationStore } from '../store/organization-store';
+import type { MyOrganizationResponse } from '../types/organization.types';
 
 interface UseOrganizationSwitcherResult {
   activeOrganization: MyOrganizationResponse | null;
@@ -23,7 +23,7 @@ export function useOrganizationSwitcher(): UseOrganizationSwitcherResult {
       setActiveOrganization(organization);
 
       await queryClient.invalidateQueries({
-        queryKey: ["projects"],
+        queryKey: ['projects'],
       });
     },
     [activeOrganization, queryClient, setActiveOrganization],

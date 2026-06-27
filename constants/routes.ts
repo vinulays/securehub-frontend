@@ -1,26 +1,26 @@
 export const ROUTES = {
-  ROOT: "/",
+  ROOT: '/',
 
   AUTH: {
-    LOGIN: "/login",
-    FORGOT_PASSWORD: "/forgot-password",
+    LOGIN: '/login',
+    FORGOT_PASSWORD: '/forgot-password',
   },
 
-  DASHBOARD: "/dashboard",
+  DASHBOARD: '/dashboard',
 
   ORGANIZATIONS: {
-    ROOT: "/organizations",
-    CREATE: "/organizations/create",
+    ROOT: '/organizations',
+    CREATE: '/organizations/create',
     DETAILS: (id: string) => `/organizations/${id}`,
   },
 
   USERS: {
-    ROOT: "/users",
-    INVITE: "/users/invite",
+    ROOT: '/users',
+    INVITE: '/users/invite',
   },
 
   SETTINGS: {
-    ROOT: "/settings",
-    PROFILE: "/settings/profile",
+    ROOT: '/settings',
+    PROFILE: '/settings/profile',
   },
 } as const;

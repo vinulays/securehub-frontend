@@ -1,1 +1,1 @@
-export * from "./organization-store";
+export * from './organization-store';

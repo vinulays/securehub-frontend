@@ -1,15 +1,10 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation } from '@tanstack/react-query';
 
-import { organizationService } from "../services/organization-service";
-import type {
-  OrganizationSearchRequest,
-  OrganizationSearchResponse,
-} from "../types/organization.types";
+import { organizationService } from '../services/organization-service';
+import type { OrganizationSearchRequest, OrganizationSearchResponse } from '../types/organization.types';
 
 interface UseOrganizationsResult {
-  search: (
-    data: OrganizationSearchRequest,
-  ) => Promise<OrganizationSearchResponse>;
+  search: (data: OrganizationSearchRequest) => Promise<OrganizationSearchResponse>;
   isLoading: boolean;
   isError: boolean;
   error: unknown;
@@ -17,8 +12,7 @@ interface UseOrganizationsResult {
 
 export function useOrganizations(): UseOrganizationsResult {
   const searchOrganizationsMutation = useMutation({
-    mutationFn: async (request: OrganizationSearchRequest) =>
-      organizationService.searchOrganization(request),
+    mutationFn: async (request: OrganizationSearchRequest) => organizationService.searchOrganization(request),
   });
 
   return {

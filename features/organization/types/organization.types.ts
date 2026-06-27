@@ -11,7 +11,7 @@ export interface OrganizationSearchRequest {
   page: number;
   size: number;
   sortBy: string;
-  sortDirection: "asc" | "desc";
+  sortDirection: 'asc' | 'desc';
   isActive?: number;
 }
 
@@ -23,7 +23,4 @@ export interface OrganizationSearchResponse {
   number: number;
 }
 
-export type MyOrganizationResponse = Omit<
-  Organization,
-  "isActive" | "description"
->;
+export type MyOrganizationResponse = Omit<Organization, 'isActive' | 'description'>;

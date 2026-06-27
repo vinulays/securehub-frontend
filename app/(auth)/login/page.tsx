@@ -1,6 +1,6 @@
-import { GalleryVerticalEnd } from "lucide-react";
+import { GalleryVerticalEnd } from 'lucide-react';
 
-import { LoginForm } from "@/features/auth";
+import { LoginForm } from '@/features/auth';
 
 export default function LoginPage() {
   return (
@@ -16,7 +16,7 @@ export default function LoginPage() {
         </div>
 
         <div className="flex flex-1 items-center justify-center">
-          <div className="w-full max-w-md border border-border bg-card p-8 rounded-xl">
+          <div className="w-full max-w-md rounded-xl border border-border bg-card p-8">
             <LoginForm />
           </div>
         </div>

@@ -1,7 +1,7 @@
-import { API_ROUTES } from "@/constants/api";
-import { api } from "@/lib/axios";
+import { API_ROUTES } from '@/constants/api';
+import { api } from '@/lib/axios';
 
-import type { AuthUser, LoginRequest } from "../types/auth.types";
+import type { AuthUser, LoginRequest } from '../types/auth.types';
 
 class AuthService {
   async login(data: LoginRequest) {

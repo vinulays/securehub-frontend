@@ -1,32 +1,17 @@
-"use client";
+'use client';
 
-import { ChevronsUpDown } from "lucide-react";
-import { useEffect, useState } from "react";
+import { ChevronsUpDown } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
-import type { MyOrganizationResponse } from "@/features/organization";
-import {
-  useMyOrganizations,
-  useOrganizationSwitcher,
-} from "@/features/organization";
-import { getAvatarColor, getInitials } from "@/lib/utils";
+import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
+import type { MyOrganizationResponse } from '@/features/organization';
+import { useMyOrganizations, useOrganizationSwitcher } from '@/features/organization';
+import { getAvatarColor, getInitials } from '@/lib/utils';
 
-import { Avatar, AvatarFallback } from "../ui/avatar";
-import {
-  Command,
-  CommandEmpty,
-  CommandGroup,
-  CommandInput,
-  CommandItem,
-  CommandList,
-} from "../ui/command";
-import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
-import OrganizationSwitcherSkeleton from "./organization-switcher-skeleton";
+import { Avatar, AvatarFallback } from '../ui/avatar';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
+import OrganizationSwitcherSkeleton from './organization-switcher-skeleton';
 
 export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
@@ -35,9 +20,7 @@ export function OrganizationSwitcher() {
   const { data: organizations = [], isLoading } = useMyOrganizations();
   const { activeOrganization, switchOrganization } = useOrganizationSwitcher();
 
-  const handleOrganizationSelect = async (
-    organization: MyOrganizationResponse,
-  ) => {
+  const handleOrganizationSelect = async (organization: MyOrganizationResponse) => {
     await switchOrganization(organization);
 
     setIsPopoverOpen(false);
@@ -61,23 +44,19 @@ export function OrganizationSwitcher() {
             render={
               <SidebarMenuButton
                 size="lg"
-                className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground cursor-pointer"
+                className="cursor-pointer data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
               >
                 <Avatar className="size-8">
                   <AvatarFallback
-                    style={getAvatarColor(activeOrganization?.name || "")}
-                    className="text-sidebar-primary-foreground text-xs font-semibold"
+                    style={getAvatarColor(activeOrganization?.name || '')}
+                    className="text-xs font-semibold text-sidebar-primary-foreground"
                   >
-                    {activeOrganization?.name
-                      ? getInitials(activeOrganization.name)
-                      : "OR"}
+                    {activeOrganization?.name ? getInitials(activeOrganization.name) : 'OR'}
                   </AvatarFallback>
                 </Avatar>
 
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">
-                    {activeOrganization?.name}
-                  </span>
+                  <span className="truncate font-medium">{activeOrganization?.name}</span>
                 </div>
 
                 <ChevronsUpDown className="ml-auto" />
@@ -85,12 +64,7 @@ export function OrganizationSwitcher() {
             }
           />
 
-          <PopoverContent
-            className="rounded-lg"
-            align="start"
-            side={isMobile ? "bottom" : "right"}
-            sideOffset={4}
-          >
+          <PopoverContent className="rounded-lg" align="start" side={isMobile ? 'bottom' : 'right'} sideOffset={4}>
             <Command>
               <CommandInput placeholder="Search organizations..." />
 
@@ -103,12 +77,9 @@ export function OrganizationSwitcher() {
                       key={organization.id}
                       value={organization.name}
                       onSelect={() => handleOrganizationSelect(organization)}
-                      data-checked={
-                        activeOrganization &&
-                        activeOrganization.id === organization.id
-                      }
+                      data-checked={activeOrganization && activeOrganization.id === organization.id}
                     >
-                      <div className="flex justify-between items-center w-full">
+                      <div className="flex w-full items-center justify-between">
                         <div className="flex items-center gap-2">
                           <Avatar className="size-8">
                             <AvatarFallback

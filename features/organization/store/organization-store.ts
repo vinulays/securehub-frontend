@@ -1,6 +1,6 @@
-import { create } from "zustand";
+import { create } from 'zustand';
 
-import type { MyOrganizationResponse } from "../types/organization.types";
+import type { MyOrganizationResponse } from '../types/organization.types';
 
 interface OrganizationState {
   activeOrganization: MyOrganizationResponse | null;

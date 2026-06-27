@@ -1,16 +1,14 @@
-import { API_ROUTES } from "@/constants/api";
-import { api } from "@/lib/axios";
+import { API_ROUTES } from '@/constants/api';
+import { api } from '@/lib/axios';
 
 import type {
   MyOrganizationResponse,
   OrganizationSearchRequest,
   OrganizationSearchResponse,
-} from "../types/organization.types";
+} from '../types/organization.types';
 
 class OrganizationService {
-  async searchOrganization(
-    request: OrganizationSearchRequest,
-  ): Promise<OrganizationSearchResponse> {
+  async searchOrganization(request: OrganizationSearchRequest): Promise<OrganizationSearchResponse> {
     const response = await api.post(API_ROUTES.ORGANIZATIONS.SEARCH, request);
 
     return response.data;
