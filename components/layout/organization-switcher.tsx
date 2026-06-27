@@ -1,41 +1,50 @@
 "use client";
 
-import { AudioWaveform, ChevronsUpDown, Plus } from "lucide-react";
-import { useEffect } from "react";
+import { AudioWaveform, ChevronsUpDown } from "lucide-react";
+import { useEffect, useState } from "react";
 
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuGroup,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
 import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
   useSidebar,
 } from "@/components/ui/sidebar";
+import type { MyOrganizationResponse } from "@/features/organization";
 import {
   useMyOrganizations,
-  useOrganizationStore,
+  useOrganizationSwitcher,
 } from "@/features/organization";
 
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "../ui/command";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import OrganizationSwitcherSkeleton from "./organization-switcher-skeleton";
 
 export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();
+  const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
   const { data: organizations = [], isLoading } = useMyOrganizations();
-  const { activeOrganization, setActiveOrganization } = useOrganizationStore();
+  const { activeOrganization, switchOrganization } = useOrganizationSwitcher();
+
+  const handleOrganizationSelect = async (
+    organization: MyOrganizationResponse,
+  ) => {
+    await switchOrganization(organization);
+    setIsPopoverOpen(false);
+  };
 
   useEffect(() => {
     if (!activeOrganization && organizations.length > 0) {
-      setActiveOrganization(organizations[0]);
+      switchOrganization(organizations[0]);
     }
-  }, [organizations, activeOrganization, setActiveOrganization]);
+  }, [organizations, activeOrganization, switchOrganization]);
 
   if (isLoading) {
     return <OrganizationSwitcherSkeleton />;
@@ -44,8 +53,8 @@ export function OrganizationSwitcher() {
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <DropdownMenu>
-          <DropdownMenuTrigger
+        <Popover open={isPopoverOpen} onOpenChange={setIsPopoverOpen}>
+          <PopoverTrigger
             render={
               <SidebarMenuButton
                 size="lg"
@@ -66,45 +75,45 @@ export function OrganizationSwitcher() {
             }
           />
 
-          <DropdownMenuContent
-            className="w-(--radix-dropdown-menu-trigger-width) min-w-56 rounded-lg"
+          <PopoverContent
+            className="rounded-lg"
             align="start"
             side={isMobile ? "bottom" : "right"}
             sideOffset={4}
           >
-            <DropdownMenuGroup>
-              <DropdownMenuLabel className="text-xs text-muted-foreground">
-                Organizations
-              </DropdownMenuLabel>
-            </DropdownMenuGroup>
+            <Command>
+              <CommandInput placeholder="Search organizations..." />
 
-            {organizations.map((organization) => (
-              <DropdownMenuItem
-                key={organization.name}
-                onClick={() => setActiveOrganization(organization)}
-                className="gap-2 p-2"
-              >
-                <div className="flex size-6 items-center justify-center rounded-md border">
-                  <AudioWaveform className="size-3.5 shrink-0" />
-                </div>
+              <CommandList>
+                <CommandEmpty>No organization found.</CommandEmpty>
 
-                {organization.name}
-              </DropdownMenuItem>
-            ))}
+                <CommandGroup>
+                  {organizations.map((organization: MyOrganizationResponse) => (
+                    <CommandItem
+                      key={organization.id}
+                      value={organization.name}
+                      onSelect={() => handleOrganizationSelect(organization)}
+                      data-checked={
+                        activeOrganization &&
+                        activeOrganization.id === organization.id
+                      }
+                    >
+                      <div className="flex justify-between items-center w-full">
+                        <div className="flex items-center gap-2">
+                          <div className="flex size-6 items-center justify-center rounded-md border">
+                            <AudioWaveform className="size-3.5 shrink-0" />
+                          </div>
 
-            <DropdownMenuSeparator />
-
-            <DropdownMenuItem className="gap-2 p-2">
-              <div className="flex size-6 items-center justify-center rounded-md border bg-transparent">
-                <Plus className="size-4" />
-              </div>
-
-              <div className="font-medium text-muted-foreground">
-                Add Organization
-              </div>
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+                          {organization.name}
+                        </div>
+                      </div>
+                    </CommandItem>
+                  ))}
+                </CommandGroup>
+              </CommandList>
+            </Command>
+          </PopoverContent>
+        </Popover>
       </SidebarMenuItem>
     </SidebarMenu>
   );
