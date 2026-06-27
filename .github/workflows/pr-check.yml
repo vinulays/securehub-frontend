@@ -12,6 +12,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
       - name: Cache node modules
         uses: actions/cache@v4
         with:
@@ -19,8 +20,13 @@ jobs:
           key: ${{ runner.os }}-node-${{ hashFiles('pnpm-lock.yaml') }}
           restore-keys: |
             ${{ runner.os }}-node-
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run lint check
         run: pnpm run check:lint
 
@@ -30,8 +36,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable       
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run prettier check
         run: pnpm run check:format
 
@@ -41,8 +52,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run TypeScript check
         run: pnpm run check:types
 
@@ -52,8 +68,13 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
+
       - name: Install dependencies
         run: pnpm install
+
       - name: Run build check
         run: pnpm run build
 
@@ -63,6 +84,9 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Enable Corepack (pnpm)
+        run: corepack enable
 
       - name: Install dependencies
         run: pnpm install
