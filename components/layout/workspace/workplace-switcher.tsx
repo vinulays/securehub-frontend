@@ -8,10 +8,10 @@ import type { MyOrganizationResponse } from '@/features/organization';
 import { useMyOrganizations, useOrganizationSwitcher } from '@/features/organization';
 import { getAvatarColor, getInitials } from '@/lib/utils';
 
-import { Avatar, AvatarFallback } from '../ui/avatar';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../ui/command';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import OrganizationSwitcherSkeleton from './organization-switcher-skeleton';
+import { Avatar, AvatarFallback } from '../../ui/avatar';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../../ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
+import OrganizationSwitcherSkeleton from './workplace-switcher-skeleton';
 
 export function OrganizationSwitcher() {
   const { isMobile } = useSidebar();

@@ -1,6 +1,7 @@
 'use client';
 
 import { type LucideIcon } from 'lucide-react';
+import { usePathname, useRouter } from 'next/navigation';
 
 import {
   SidebarGroup,
@@ -10,7 +11,7 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 
-export function NavMain({
+export function WorkspaceNavMain({
   items,
 }: {
   items: {
@@ -24,6 +25,13 @@ export function NavMain({
     }[];
   }[];
 }) {
+  const router = useRouter();
+  const pathname = usePathname();
+
+  const handleNavigate = (url: string) => {
+    router.push(url);
+  };
+
   return (
     <SidebarGroup>
       <SidebarGroupLabel>Platform</SidebarGroupLabel>
@@ -31,7 +39,7 @@ export function NavMain({
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.title}>
-            <SidebarMenuButton tooltip={item.title}>
+            <SidebarMenuButton onClick={() => handleNavigate(item.url)} isActive={pathname === item.url}>
               {item.icon && <item.icon />}
 
               <span>{item.title}</span>

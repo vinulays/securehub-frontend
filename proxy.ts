@@ -1,7 +1,10 @@
 import type { NextRequest } from 'next/server';
 import { NextResponse } from 'next/server';
 
+import { UserRole } from './constants/roles';
 import { ROUTES } from './constants/routes';
+import type { KeycloakToken } from './features/auth/types/token.types';
+import { decodeJwtPayload } from './lib/utils';
 
 export function proxy(request: NextRequest) {
   const accessToken = request.cookies.get('access_token');
@@ -17,7 +20,17 @@ export function proxy(request: NextRequest) {
   }
 
   if (hasSession && (isLoginPage || isRootPage)) {
-    return NextResponse.redirect(new URL(ROUTES.DASHBOARD, request.url));
+    const payload = accessToken ? decodeJwtPayload<KeycloakToken>(accessToken?.value) : null;
+
+    const roles = payload?.realm_access.roles ?? [];
+
+    const isAdmin = roles.includes(UserRole.ADMIN);
+
+    if (isAdmin) {
+      return NextResponse.redirect(new URL(ROUTES.ADMIN.DASHBOARD, request.url));
+    }
+
+    return NextResponse.redirect(new URL(ROUTES.WORKSPACE.DASHBOARD, request.url));
   }
 
   return NextResponse.next();
