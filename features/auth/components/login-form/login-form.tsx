@@ -9,6 +9,7 @@ import { useForm } from 'react-hook-form';
 import FormField from '@/components/common/form-field';
 import { Button } from '@/components/ui/button';
 import { Field, FieldError } from '@/components/ui/field';
+import { UserRole } from '@/constants/roles';
 import { ROUTES } from '@/constants/routes';
 import { getErrorMessage } from '@/lib/error-handler';
 import { cn } from '@/lib/utils';
@@ -47,7 +48,11 @@ export function LoginForm() {
 
       setUser(currentUser);
 
-      router.push(ROUTES.DASHBOARD);
+      if (currentUser.roles.includes(UserRole.ADMIN)) {
+        router.push(ROUTES.ADMIN.DASHBOARD);
+      } else {
+        router.push(ROUTES.WORKSPACE.DASHBOARD);
+      }
     } catch (error) {
       setError('root', {
         type: 'server',

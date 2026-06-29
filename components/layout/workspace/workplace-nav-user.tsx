@@ -16,11 +16,11 @@ import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/c
 import type { AuthUser } from '@/features/auth';
 import { useLogout } from '@/features/auth/hooks/use-logout';
 
-interface NavUserProps {
+interface OrganizationNavUserProps {
   user: AuthUser;
 }
 
-export function NavUser({ user }: NavUserProps) {
+export function WorkspaceNavUser({ user }: OrganizationNavUserProps) {
   const { isMobile } = useSidebar();
 
   const { logout, isLoggingOut } = useLogout();

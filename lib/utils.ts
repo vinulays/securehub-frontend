@@ -33,3 +33,15 @@ export function getAvatarColor(name: string) {
     backgroundColor: `hsl(${hue}, 70%, 50%)`,
   };
 }
+
+export function decodeJwtPayload<T>(token: string): T | null {
+  try {
+    const payload = token.split('.')[1];
+
+    const decoded = JSON.parse(atob(payload));
+
+    return decoded;
+  } catch {
+    return null;
+  }
+}
