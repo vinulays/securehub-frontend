@@ -1,7 +1,15 @@
+import { OrganizationTable } from '@/features/organization';
+
 export default function OrganizationsPage() {
   return (
-    <div className="flex h-full items-center justify-center">
-      <h1 className="text-lg">Organizations</h1>
+    <div className="flex h-full flex-col space-y-6">
+      <div className="space-y-2">
+        <h1 className="text-2xl font-semibold">Organizations</h1>
+
+        <p className="text-muted-foreground">Manage organizations across the platform.</p>
+      </div>
+
+      <OrganizationTable />
     </div>
   );
 }

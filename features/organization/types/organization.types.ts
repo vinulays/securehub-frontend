@@ -3,7 +3,13 @@ export interface Organization {
   name: string;
   slug: string;
   description: string;
-  isActive: boolean;
+  status: OrganizationStatusEnum;
+  createdAt: Date;
+}
+
+enum OrganizationStatusEnum {
+  ACTIVE = 'ACTIVE',
+  INACTIVE = 'INACTIVE',
 }
 
 export interface OrganizationSearchRequest {
@@ -11,7 +17,7 @@ export interface OrganizationSearchRequest {
   page: number;
   size: number;
   sortBy: string;
-  sortDirection: 'asc' | 'desc';
+  sortDirection: string;
   isActive?: number;
 }
 
