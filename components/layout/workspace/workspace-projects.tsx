@@ -19,7 +19,7 @@ import {
   useSidebar,
 } from '@/components/ui/sidebar';
 
-export function WorkspaceNavProjects({
+export function WorkspaceProjects({
   projects,
 }: {
   projects: {
@@ -33,6 +33,7 @@ export function WorkspaceNavProjects({
   return (
     <SidebarGroup className="group-data-[collapsible=icon]:hidden">
       <SidebarGroupLabel>Projects</SidebarGroupLabel>
+
       <SidebarMenu>
         {projects.map((item) => (
           <SidebarMenuItem key={item.name} className="flex items-center">
