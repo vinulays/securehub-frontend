@@ -11,9 +11,9 @@ import { getAvatarColor, getInitials } from '@/lib/utils';
 import { Avatar, AvatarFallback } from '../../ui/avatar';
 import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '../../ui/command';
 import { Popover, PopoverContent, PopoverTrigger } from '../../ui/popover';
-import OrganizationSwitcherSkeleton from './workplace-switcher-skeleton';
+import WorkspaceSwitcherSkeleton from './workspace-switcher-skeleton';
 
-export function OrganizationSwitcher() {
+export function WorkspaceSwitcher() {
   const { isMobile } = useSidebar();
   const [isPopoverOpen, setIsPopoverOpen] = useState<boolean>(false);
 
@@ -33,7 +33,7 @@ export function OrganizationSwitcher() {
   }, [organizations, activeOrganization, switchOrganization]);
 
   if (isLoading) {
-    return <OrganizationSwitcherSkeleton />;
+    return <WorkspaceSwitcherSkeleton />;
   }
 
   return (

@@ -14,13 +14,13 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { SidebarMenu, SidebarMenuButton, SidebarMenuItem, useSidebar } from '@/components/ui/sidebar';
 import type { AuthUser } from '@/features/auth';
-import { useLogout } from '@/features/auth/hooks/use-logout';
+import { useLogout } from '@/features/auth';
 
-interface OrganizationNavUserProps {
+interface SidebarUserProps {
   user: AuthUser;
 }
 
-export function WorkspaceNavUser({ user }: OrganizationNavUserProps) {
+export function SidebarUser({ user }: SidebarUserProps) {
   const { isMobile } = useSidebar();
 
   const { logout, isLoggingOut } = useLogout();

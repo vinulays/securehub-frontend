@@ -1,6 +1,6 @@
 import { Skeleton } from '../../ui/skeleton';
 
-export default function OrganizationSwitcherSkeleton() {
+export default function WorkspaceSwitcherSkeleton() {
   return (
     <div className="flex items-center gap-3 rounded-lg p-3">
       <Skeleton className="size-8 rounded-lg" />

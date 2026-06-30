@@ -1,4 +1,4 @@
-import WorkspaceSidebar from '@/components/layout/workspace/workplace-sidebar';
+import WorkspaceSidebar from '@/components/layout/workspace/workspace-sidebar';
 import { Breadcrumb, BreadcrumbItem, BreadcrumbList, BreadcrumbPage } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from '@/components/ui/sidebar';

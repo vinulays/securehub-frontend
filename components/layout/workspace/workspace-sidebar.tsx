@@ -6,9 +6,9 @@ import { workspaceNavigation } from '@/config/workspace-navigation';
 import { useAuthUser } from '@/features/auth/hooks/use-auth-user';
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from '../../ui/sidebar';
-import { WorkspaceNavMain } from './workplace-nav-main';
-import { WorkspaceNavUser } from './workplace-nav-user';
-import { OrganizationSwitcher } from './workplace-switcher';
+import { SidebarNavigation } from '../sidebar-navigation';
+import { SidebarUser } from '../sidebar-user';
+import { WorkspaceSwitcher } from './workspace-switcher';
 
 export default function WorkspaceSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const user = useAuthUser();
@@ -16,15 +16,15 @@ export default function WorkspaceSidebar({ ...props }: React.ComponentProps<type
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
-        <OrganizationSwitcher />
+        <WorkspaceSwitcher />
       </SidebarHeader>
 
       <SidebarContent>
-        <WorkspaceNavMain items={workspaceNavigation} />
+        <SidebarNavigation label="Platform" items={workspaceNavigation} />
         {/* <OrganizationNavProjects /> */}
       </SidebarContent>
 
-      <SidebarFooter>{user && <WorkspaceNavUser user={user} />}</SidebarFooter>
+      <SidebarFooter>{user && <SidebarUser user={user} />}</SidebarFooter>
 
       <SidebarRail />
     </Sidebar>
