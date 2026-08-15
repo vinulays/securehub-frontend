@@ -9,7 +9,9 @@ export default function OrganizationsPage() {
         <p className="text-muted-foreground">Manage organizations across the platform.</p>
       </div>
 
-      <OrganizationTable />
+      <div className="flex-1">
+        <OrganizationTable />
+      </div>
     </div>
   );
 }

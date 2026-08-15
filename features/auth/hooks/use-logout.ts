@@ -13,7 +13,7 @@ export function useLogout(): UseLogoutResult {
   const logoutMutation = useMutation({
     mutationFn: authService.logout,
 
-    onSettled: async () => {
+    onSettled: () => {
       window.location.replace(ROUTES.AUTH.LOGIN);
     },
   });

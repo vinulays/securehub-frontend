@@ -30,12 +30,13 @@ export function OrganizationTable() {
     [pagination, sorting],
   );
 
-  const { data } = useOrganizations(request);
+  const { data, isLoading } = useOrganizations(request);
 
   return (
     <DataTable
       columns={organizationColumns}
       data={data?.content ?? []}
+      isLoading={isLoading}
       pageCount={data?.totalPages ?? 0}
       pagination={pagination}
       onPaginationChange={setPagination}
