@@ -8,7 +8,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     <SidebarProvider>
       <AdminSidebar />
 
-      <SidebarInset>
+      <SidebarInset className="h-screen overflow-hidden">
         <header className="flex h-16 shrink-0 items-center gap-2">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger />
@@ -25,7 +25,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         </header>
 
-        <main className="flex flex-1 flex-col px-4">{children}</main>
+        <main className="flex flex-1 flex-col overflow-hidden px-4">{children}</main>
       </SidebarInset>
     </SidebarProvider>
   );
