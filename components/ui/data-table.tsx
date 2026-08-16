@@ -53,12 +53,12 @@ export default function DataTable<TData, TValue>({
   });
 
   return (
-    <div className="flex h-full flex-col overflow-hidden">
+    <div className="flex h-full flex-col">
       <div className="flex flex-1 flex-col overflow-hidden">
         <div className="overflow-hidden rounded-lg border border-border">
           <ScrollArea className="h-full">
-            <Table className="h-full">
-              <TableHeader>
+            <Table className="w-full">
+              <TableHeader className="sticky top-0 z-10 bg-primary">
                 {table.getHeaderGroups().map((headerGroup) => (
                   <TableRow key={headerGroup.id}>
                     {headerGroup.headers.map((header) => {
