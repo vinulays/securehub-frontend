@@ -3,7 +3,7 @@
 import type { PaginationState, SortingState } from '@tanstack/react-table';
 import { useMemo, useState } from 'react';
 
-import DataTable from '@/components/ui/data-table';
+import { TableShell } from '@/components/common/TableShell';
 
 import { useOrganizations } from '../../hooks/use-organizations';
 import { organizationColumns } from './organization-columns';
@@ -33,7 +33,7 @@ export function OrganizationTable() {
   const { data, isLoading } = useOrganizations(request);
 
   return (
-    <DataTable
+    <TableShell
       columns={organizationColumns}
       data={data?.content ?? []}
       isLoading={isLoading}

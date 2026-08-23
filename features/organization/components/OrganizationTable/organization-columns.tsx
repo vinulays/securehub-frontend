@@ -1,7 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table';
 
+import { DataTableColumnHeader } from '@/components/common/Table/DataTableColumnHeader';
 import { Badge } from '@/components/ui/badge';
-import { DataTableColumnHeader } from '@/components/ui/data-table-column-header';
 
 import type { Organization } from '../../types';
 

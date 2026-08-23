@@ -1,9 +1,10 @@
 import type { ColumnDef, OnChangeFn, PaginationState, SortingState } from '@tanstack/react-table';
 import { flexRender, getCoreRowModel, useReactTable } from '@tanstack/react-table';
 
-import { DataTablePagination } from './data-table-pagination';
-import { ScrollArea } from './scroll-area';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from './table';
+import { ScrollArea } from '@/components/ui/scroll-area';
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+
+import { DataTablePagination } from '../DataTablePagination';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -11,13 +12,17 @@ interface DataTableProps<TData, TValue> {
 
   isLoading?: boolean;
 
-  pageCount: number;
+  pageCount?: number;
+  pagination?: PaginationState;
 
-  pagination: PaginationState;
-  onPaginationChange: OnChangeFn<PaginationState> | undefined;
+  onPaginationChange?: OnChangeFn<PaginationState>;
 
-  sorting: SortingState;
-  onSortingChange: OnChangeFn<SortingState> | undefined;
+  sorting?: SortingState;
+  onSortingChange?: OnChangeFn<SortingState>;
+
+  manualPagination?: boolean;
+  manualSorting?: boolean;
+  hidePagination?: boolean;
 }
 
 export default function DataTable<TData, TValue>({
@@ -29,6 +34,9 @@ export default function DataTable<TData, TValue>({
   onPaginationChange,
   sorting,
   onSortingChange,
+  manualPagination = true,
+  manualSorting = true,
+  hidePagination = false,
 }: DataTableProps<TData, TValue>) {
   const table = useReactTable({
     data,
@@ -43,8 +51,8 @@ export default function DataTable<TData, TValue>({
 
     pageCount,
 
-    manualSorting: true,
-    manualPagination: true,
+    manualSorting: manualSorting,
+    manualPagination: manualPagination,
 
     onSortingChange,
     onPaginationChange,
@@ -100,9 +108,11 @@ export default function DataTable<TData, TValue>({
         </div>
       </div>
 
-      <div className="shrink-0 px-4 pt-2">
-        <DataTablePagination table={table} />
-      </div>
+      {!hidePagination && (
+        <div className="shrink-0 px-4 pt-2">
+          <DataTablePagination table={table} />
+        </div>
+      )}
     </div>
   );
 }
