@@ -12,7 +12,7 @@ export function AddOrganizationButton() {
 
   return (
     <>
-      <Button onClick={() => setIsOpen(true)}>
+      <Button className="h-10 px-8 py-6" onClick={() => setIsOpen(true)}>
         <PlusIcon />
         Add Organization
       </Button>
