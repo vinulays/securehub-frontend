@@ -22,7 +22,7 @@ export function SearchInput({ value, onSearchChange, debounceMs = 500, placehold
   }, [debouncedSearchTerm, onSearchChange]);
 
   return (
-    <div className="relative w-full rounded-md bg-white">
+    <div className="relative w-full rounded-lg bg-white">
       <Input
         placeholder={placeholder}
         value={searchInput}

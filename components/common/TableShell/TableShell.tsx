@@ -63,7 +63,7 @@ export default function TableShell<TData, TValue>({
   return (
     <div className={cn(`flex h-full flex-col ${data.length === 0 && !isLoading ? '' : 'gap-4'}`, className)}>
       {(onSearchChange || topActions) && (
-        <div className="mb-4 flex shrink-0 flex-col gap-6">
+        <div className="mb-2 flex shrink-0 flex-col gap-6">
           <div className="flex flex-col items-stretch justify-between gap-4 md:flex-row md:items-center">
             <div className="flex flex-1 items-center gap-3">
               <div className="w-full">
