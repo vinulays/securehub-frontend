@@ -7,9 +7,20 @@ export interface Organization {
   createdAt: Date;
 }
 
-enum OrganizationStatusEnum {
+export enum OrganizationStatusEnum {
   ACTIVE = 'ACTIVE',
   INACTIVE = 'INACTIVE',
+}
+
+export interface CreateOrganizationRequest {
+  name: string;
+  slug: string;
+  description: string;
+}
+
+export interface UpdateOrganizationRequest {
+  name: string;
+  description: string;
 }
 
 export interface OrganizationSearchRequest {

@@ -9,7 +9,11 @@ export const API_ROUTES = {
   },
 
   ORGANIZATIONS: {
+    CREATE: '/organizations',
     SEARCH: '/organizations/search',
     MY_ORGANIZATIONS: '/organizations/my-organizations',
+    UPDATE: (id: string) => `/organizations/${id}`,
+    ACTIVATE: (id: string) => `/organizations/${id}/activate`,
+    DEACTIVATE: (id: string) => `/organizations/${id}/deactivate`,
   },
 };

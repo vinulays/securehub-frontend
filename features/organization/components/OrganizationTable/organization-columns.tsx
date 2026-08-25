@@ -4,11 +4,16 @@ import { DataTableColumnHeader } from '@/components/common/Table/DataTableColumn
 import { Badge } from '@/components/ui/badge';
 
 import type { Organization } from '../../types';
+import { OrganizationRowActions } from './organization-row-actions';
 
 export const organizationColumns: ColumnDef<Organization>[] = [
   {
     accessorKey: 'name',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Organization" />,
+  },
+  {
+    accessorKey: 'description',
+    header: ({ column }) => <DataTableColumnHeader column={column} title="Description" />,
   },
   {
     accessorKey: 'status',
@@ -19,5 +24,14 @@ export const organizationColumns: ColumnDef<Organization>[] = [
     accessorKey: 'createdAt',
     header: ({ column }) => <DataTableColumnHeader column={column} title="Created Date" />,
     cell: ({ row }) => new Date(row.original.createdAt).toLocaleDateString(),
+  },
+  {
+    id: 'actions',
+    header: 'Actions',
+    cell: ({ row }) => <OrganizationRowActions organization={row.original} />,
+    enableSorting: false,
+    size: 72,
+    minSize: 72,
+    maxSize: 72,
   },
 ];

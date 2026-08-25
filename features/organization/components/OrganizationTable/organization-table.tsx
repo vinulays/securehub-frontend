@@ -1,11 +1,12 @@
 'use client';
 
 import type { PaginationState, SortingState } from '@tanstack/react-table';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 
 import { TableShell } from '@/components/common/TableShell';
 
 import { useOrganizations } from '../../hooks/use-organizations';
+import { AddOrganizationButton } from './add-organization-button';
 import { organizationColumns } from './organization-columns';
 
 export function OrganizationTable() {
@@ -15,10 +16,16 @@ export function OrganizationTable() {
   });
 
   const [sorting, setSorting] = useState<SortingState>([]);
+  const [searchKeyword, setSearchKeyword] = useState('');
+
+  const handleSearchChange = useCallback((query: string) => {
+    setSearchKeyword(query);
+    setPagination(({ pageSize }) => ({ pageIndex: 0, pageSize }));
+  }, []);
 
   const request = useMemo(
     () => ({
-      keyword: '',
+      keyword: searchKeyword,
 
       page: pagination.pageIndex,
       size: pagination.pageSize,
@@ -27,7 +34,7 @@ export function OrganizationTable() {
 
       sortDirection: sorting[0]?.desc ? 'DESC' : 'ASC',
     }),
-    [pagination, sorting],
+    [pagination, searchKeyword, sorting],
   );
 
   const { data, isLoading } = useOrganizations(request);
@@ -42,6 +49,10 @@ export function OrganizationTable() {
       onPaginationChange={setPagination}
       sorting={sorting}
       onSortingChange={setSorting}
+      searchValue={searchKeyword}
+      onSearchChange={handleSearchChange}
+      searchPlaceholder="Search organizations..."
+      topActions={<AddOrganizationButton />}
     />
   );
 }
