@@ -1,23 +1,19 @@
 'use client';
 
 import { PlusIcon } from 'lucide-react';
-import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-import { OrganizationFormDialog } from './organization-form-dialog';
+interface AddOrganizationButtonProps {
+  onOpen: () => void;
+  disabled?: boolean;
+}
 
-export function AddOrganizationButton() {
-  const [isOpen, setIsOpen] = useState(false);
-
+export function AddOrganizationButton({ onOpen, disabled = false }: AddOrganizationButtonProps) {
   return (
-    <>
-      <Button className="h-10 px-8 py-6" onClick={() => setIsOpen(true)}>
-        <PlusIcon />
-        Add Organization
-      </Button>
-
-      <OrganizationFormDialog open={isOpen} onOpenChange={setIsOpen} />
-    </>
+    <Button className="h-10 px-8 py-6" onClick={onOpen} disabled={disabled}>
+      <PlusIcon />
+      Add Organization
+    </Button>
   );
 }

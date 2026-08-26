@@ -85,7 +85,7 @@ export function OrganizationFormDialog({ open, onOpenChange, organization }: Org
         <DialogHeader>
           <DialogTitle>{isEditing ? 'Edit Organization' : 'Add Organization'}</DialogTitle>
 
-          <DialogDescription className="break-words">
+          <DialogDescription className="wrap-break-word">
             {isEditing ? 'Update the organization details.' : 'Enter the details for the new organization.'}
           </DialogDescription>
         </DialogHeader>
@@ -121,7 +121,7 @@ export function OrganizationFormDialog({ open, onOpenChange, organization }: Org
           />
 
           {formState.errors.root?.message && (
-            <FieldError className="break-words" errors={[{ message: formState.errors.root.message }]} />
+            <FieldError className="wrap-break-word" errors={[{ message: formState.errors.root.message }]} />
           )}
 
           <DialogFooter>
