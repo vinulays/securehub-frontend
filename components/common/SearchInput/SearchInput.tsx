@@ -27,7 +27,7 @@ export function SearchInput({ value, onSearchChange, debounceMs = 500, placehold
         placeholder={placeholder}
         value={searchInput}
         onChange={(e) => setSearchInput(e.target.value)}
-        className="py-6 pr-12"
+        className="py-6 pr-12 focus-visible:ring-0"
         autoComplete="new-password"
         aria-autocomplete="none"
         inputMode="search"

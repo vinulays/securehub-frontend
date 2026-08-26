@@ -9,7 +9,11 @@ import { useOrganizations } from '../../hooks/use-organizations';
 import { AddOrganizationButton } from './add-organization-button';
 import { organizationColumns } from './organization-columns';
 
-export function OrganizationTable() {
+interface OrganizationTableProps {
+  onAddOrganization: () => void;
+}
+
+export function OrganizationTable({ onAddOrganization }: OrganizationTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -52,7 +56,7 @@ export function OrganizationTable() {
       searchValue={searchKeyword}
       onSearchChange={handleSearchChange}
       searchPlaceholder="Search organizations..."
-      topActions={<AddOrganizationButton />}
+      topActions={<AddOrganizationButton onOpen={onAddOrganization} disabled={isLoading} />}
     />
   );
 }
