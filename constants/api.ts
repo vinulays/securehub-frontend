@@ -16,4 +16,11 @@ export const API_ROUTES = {
     ACTIVATE: (id: string) => `/organizations/${id}/activate`,
     DEACTIVATE: (id: string) => `/organizations/${id}/deactivate`,
   },
+
+  USERS: {
+    CREATE: '/users',
+    SEARCH: '/users/search',
+    VALIDATE_INVITATION: (token: string) => `/users/invitations/${token}`,
+    ACCEPT_INVITATION: '/users/invitations/accept',
+  },
 };

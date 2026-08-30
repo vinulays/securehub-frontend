@@ -13,9 +13,10 @@ export function proxy(request: NextRequest) {
   const hasSession = accessToken || refreshToken;
 
   const isLoginPage = request.nextUrl.pathname === ROUTES.AUTH.LOGIN;
+  const isInvitePage = request.nextUrl.pathname === ROUTES.AUTH.INVITE;
   const isRootPage = request.nextUrl.pathname === ROUTES.ROOT;
 
-  if (!hasSession && !isLoginPage) {
+  if (!hasSession && !isLoginPage && !isInvitePage) {
     return NextResponse.redirect(new URL(ROUTES.AUTH.LOGIN, request.url));
   }
 
