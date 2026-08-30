@@ -18,6 +18,9 @@ export const API_ROUTES = {
   },
 
   USERS: {
+    CREATE: '/users',
     SEARCH: '/users/search',
+    VALIDATE_INVITATION: (token: string) => `/users/invitations/${token}`,
+    ACCEPT_INVITATION: '/users/invitations/accept',
   },
 };

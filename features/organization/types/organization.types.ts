@@ -29,7 +29,7 @@ export interface OrganizationSearchRequest {
   size: number;
   sortBy: string;
   sortDirection: string;
-  isActive?: number;
+  isActive?: boolean;
 }
 
 export interface OrganizationSearchResponse {

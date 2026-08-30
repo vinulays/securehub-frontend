@@ -7,9 +7,14 @@ import { TableShell } from '@/components/common/TableShell';
 
 import { useUsers } from '../../hooks';
 import type { UserSearchRequest } from '../../types';
+import { InviteUserButton } from './invite-user-button';
 import { userColumns } from './user-columns';
 
-export function UserTable() {
+interface UserTableProps {
+  onInviteUser: () => void;
+}
+
+export function UserTable({ onInviteUser }: UserTableProps) {
   const [pagination, setPagination] = useState<PaginationState>({
     pageIndex: 0,
     pageSize: 10,
@@ -48,6 +53,7 @@ export function UserTable() {
       searchValue={searchKeyword}
       onSearchChange={handleSearchChange}
       searchPlaceholder="Search users..."
+      topActions={<InviteUserButton onOpen={onInviteUser} disabled={isLoading} />}
     />
   );
 }
